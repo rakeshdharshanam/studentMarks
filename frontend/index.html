@@ -30,11 +30,28 @@
 
       }
 
-       function getcolleges(){
+       async function getcolleges(){
+        // var data;
 
-        axios.get("http:www.localhost:8081/getcolleges").then((res) => {console.log(res.data);});
-        
+        // axios.get("http:www.localhost:8081/getcolleges").then((res) => { data = res.data; console.log(res.data);});
+
+        const  data = await axios.get("http:www.localhost:8081/getcolleges");
+
+        var tag = "";
+
+        console.log(data.data[0]["name"]);
+
+        for(let i = 0; i<data.data.length; i++){
+          tag += "<tr>"+data.data[i]["name"]+"</tr>"; 
+        }
+
+        console.log(tag)
+
+        var table = document.getElementById("table");
+        table.innerHTML = tag;
       }
+
+
     </script>
 
     <!-- Bootstrap CSS -->
@@ -64,6 +81,11 @@
 
     <button onclick= "getstudents()">get students data</button>
     <button onclick= "getcolleges()">get colleges data</button>
+
+
+    <table id = "table">
+      <tr>testing</tr>
+    </table>
 
 
 
