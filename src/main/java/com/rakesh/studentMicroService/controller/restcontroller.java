@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +25,7 @@ import com.rakesh.studentMicroService.repository.repository;
 import com.rakesh.studentMicroService.service.services;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class restcontroller {
 	
 	@Autowired
@@ -44,7 +48,7 @@ public class restcontroller {
 	
 	@RequestMapping("/hello")
 	public String hello(){
-		return "hi rakesh";
+		return "hello from spring boot";
 	}
 	
 	
