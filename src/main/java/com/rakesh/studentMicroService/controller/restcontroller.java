@@ -59,7 +59,7 @@ public class restcontroller {
 		return (ArrayList<college>)collegerepo.findAll();
 	}
 	
-	@RequestMapping(method = RequestMethod.GET,value = "/getcollege")
+	@RequestMapping(method = RequestMethod.GET,value = "/getcolleges")
 	public List<college> getcollege(){
 		return (ArrayList<college>)collegerepo.findAll();
 	}
@@ -76,7 +76,7 @@ public class restcontroller {
 	return (ArrayList<subject>) subjectrepo.findAll();
 	}
 	
-	@RequestMapping(method = RequestMethod.GET,value = "/getsubject")
+	@RequestMapping(method = RequestMethod.GET,value = "/getsubjects")
 	public List<subject> getcourses(){
 		return (ArrayList<subject>) subjectrepo.findAll();
 	}
@@ -112,7 +112,7 @@ public class restcontroller {
 		return (ArrayList<exam>)examrepo.findAll();
 	}
 	
-	@RequestMapping(method = RequestMethod.GET,value = "/getexam")
+	@RequestMapping(method = RequestMethod.GET,value = "/getexams")
 	public List<exam> getexam(){
 		return (ArrayList<exam>)examrepo.findAll();
 	}

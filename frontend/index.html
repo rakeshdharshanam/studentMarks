@@ -15,32 +15,25 @@
         var formData = new FormData(document.getElementById("studentform"));
         var id = formData.get("id");
         var name = formData.get("name");
+        
+        var data = {"id" : id, "name": name};
 
-        console.log(id+" "+name);
-
-        var headers = {
-  'Content-Type': 'application/json'
-}
-        // var data = {"id" : id, "name": name};
-
-        axios.post(url,{id : id, name : name}).then((res)=>{console.log(res)});
-
-        // console.log(res);
-
+        axios.post(url,data).then((res)=>{console.log(res)});
 
       }
 
 
       function getstudents(){
 
-        axios
-    .get("http:www.localhost:8081/getstudents")
-    .then((res) => {
-      // log response
-      console.log(res.data);
-      // user creates todos variable
-    });
-        console.log("hi from js");
+        axios.get("http:www.localhost:8081/getstudents").then((res) => {console.log(res.data);});
+
+
+      }
+
+       function getcolleges(){
+
+        axios.get("http:www.localhost:8081/getcolleges").then((res) => {console.log(res.data);});
+        
       }
     </script>
 
@@ -70,6 +63,7 @@
 
 
     <button onclick= "getstudents()">get students data</button>
+    <button onclick= "getcolleges()">get colleges data</button>
 
 
 
