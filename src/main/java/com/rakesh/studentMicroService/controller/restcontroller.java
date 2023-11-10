@@ -82,6 +82,12 @@ public class restcontroller {
 	return (ArrayList<subject>) subjectrepo.findAll();
 	}
 	
+	@RequestMapping(method = RequestMethod.GET,value = "/getsubject/{subjectname}")
+	public subject getsubjectname(@PathVariable String subjectname){
+		return  subjectrepo.getsubjectname(subjectname);
+	}
+	
+	
 	@RequestMapping(method = RequestMethod.GET,value = "/getsubjects")
 	public List<subject> getcourses(){
 		return (ArrayList<subject>) subjectrepo.findAll();
@@ -92,6 +98,11 @@ public class restcontroller {
 	@RequestMapping("/getstudents")
 	public ArrayList<student> getStudents(){
 		return s.getStudentsService();
+	}
+	
+	@RequestMapping("/getstudent/{studentname}")
+	public student getStudents(@PathVariable String studentname){
+		return studentrepo.getstudentname(studentname);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST,value = "/addstudent")
@@ -116,6 +127,11 @@ public class restcontroller {
 	public List<exam> addexam(@RequestBody exam c){
 		examrepo.save(c);
 		return (ArrayList<exam>)examrepo.findAll();
+	}
+	
+	@RequestMapping(method = RequestMethod.GET,value = "/getexam/{examname}")
+	public exam getexamname(@PathVariable String examname){
+		return examrepo.getexamname(examname);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET,value = "/getexams")
