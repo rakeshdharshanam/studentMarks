@@ -69,6 +69,12 @@ public class restcontroller {
 		return collegerepo.getcollegenames();
 	}
 	
+	@RequestMapping(method = RequestMethod.GET,value = "/getcollege/{collegename}")
+	public college getcollege(@PathVariable String collegename){
+		return collegerepo.getcollegename(collegename);
+	}
+	
+	
 //	subject
 	@RequestMapping(method = RequestMethod.POST,value="/addsubject")
 	public List<subject> addCourse(@RequestBody subject s){	

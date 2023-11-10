@@ -11,4 +11,7 @@ public interface collegerepo extends JpaRepository<college, Long> {
 
 	@Query("select c.name from college c")
 	public List<String> getcollegenames();
+	
+	@Query("select c from college c where c.name = ?1")
+	public college getcollegename(String collegename);
 }

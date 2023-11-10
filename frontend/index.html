@@ -7,14 +7,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="text/javascript">
-        function addstudent(){
+        
+        async function addstudent(){
         
           var url = "http://www.localhost:8081/addstudent";
           var formData = new FormData(document.getElementById("studentform"));
           var id = formData.get("id");
           var name = formData.get("name");
-          
-          var data = {"id" : id, "name": name};
+          var collegename = document.getElementById("collegeId").value;
+
+          console.log(collegename);
+
+          var college = await axios.get("http://www.localhost:8081/getcollege/"+collegename);
+
+          console.log(college.data);
+
+          var data = {"id" : id, "name": name, "college" : college.data};
         
           axios.post(url,data).then((res)=>{console.log(res)});
         
@@ -48,20 +56,20 @@
           var select = document.getElementById("collegeId");
           select.innerHTML += tag1;
 
-          var tag = "<table border = '2'>";
+        //   var tag = "<table border = '2'>";
         
-          console.log(data.data[0]["name"]);
+        //   console.log(data.data[0]["name"]);
         
-          for(let i = 0; i<data.data.length; i++){
-            tag += "<tr><td>"+data.data[i]["id"]+"</td>"; 
-            tag += "<td>"+data.data[i]["name"]+"</td></tr>";
-          }
+        //   for(let i = 0; i<data.data.length; i++){
+        //     tag += "<tr><td>"+data.data[i]["id"]+"</td>"; 
+        //     tag += "<td>"+data.data[i]["name"]+"</td></tr>";
+        //   }
         
-        tag += "</table>";
-          console.log(tag)
+        // tag += "</table>";
+        //   console.log(tag)
         
-          var table = document.getElementById("table");
-          table.innerHTML += tag;
+        //   var table = document.getElementById("table");
+        //   table.innerHTML += tag;
         }
         
         
@@ -83,7 +91,7 @@
                     <th><label for="name">Student Name:</label><br></th>
                 </tr>
                 <tr>
-                   <td> <select id="collegeId"></select> </td>
+                   <td> <select id="collegeId" name="collegId"></select> </td>
                     <td> <input type="text" id="id" name="id"><br> </td>
                     <td> <input type="text" id="name" name="name"> </td>
                     <td> <input type="submit" value="add student" onclick="addstudent()"> </td>
