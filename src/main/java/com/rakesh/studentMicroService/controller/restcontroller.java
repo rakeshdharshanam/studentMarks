@@ -19,6 +19,7 @@ import com.rakesh.studentMicroService.entity.exam;
 import com.rakesh.studentMicroService.entity.marks;
 import com.rakesh.studentMicroService.entity.student;
 import com.rakesh.studentMicroService.entity.subject;
+import com.rakesh.studentMicroService.entity.teacher;
 import com.rakesh.studentMicroService.repository.collegerepo;
 import com.rakesh.studentMicroService.repository.*;
 import com.rakesh.studentMicroService.repository.repository;
@@ -33,6 +34,9 @@ public class restcontroller {
 	
 	@Autowired
 	private repository studentrepo;
+	
+	@Autowired
+	private teacherrepo teacherrepo;
 	
 	@Autowired
 	private collegerepo collegerepo;
@@ -93,6 +97,20 @@ public class restcontroller {
 		return (ArrayList<subject>) subjectrepo.findAll();
 	}
 	
+	
+	
+	
+//	teacher
+	@RequestMapping("/getteachers")
+	public ArrayList<teacher> getteachers(){
+		return (ArrayList<teacher>)teacherrepo.findAll();
+	}
+		
+	@RequestMapping(method = RequestMethod.POST,value = "/addteacher")
+	public ArrayList<teacher> saveStudent(@RequestBody teacher te) {
+		teacherrepo.save(te);
+		return (ArrayList<teacher>) teacherrepo.findAll();
+	}
 	
 //	student
 	@RequestMapping("/getstudents")
