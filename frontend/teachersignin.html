@@ -8,6 +8,37 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="getdata.js"></script>
     <script type="text/javascript" src="getdata.js"> </script>
+
+    <script type="text/javascript">
+      
+      async function teachersignin(){
+
+        var formData = new FormData(document.getElementById("teachersigninform"));
+        var name = formData.get("teachername");
+        var password = formData.get("teacherpassword");
+
+        var url = "http://www.localhost:8081/getteacherlogins/"+name;
+
+        console.log(name+" "+password);
+
+        axios.get(url).then((res)=>{console.log(res.data);});
+
+        var teacherdata = await axios.get(url);
+        var teacher = teacherdata.data;
+
+        if(teacher["password"] == password){
+          document.getElementById("result").innerHTML = "<h1>success</h1>"; 
+          window.location.href = "homepage.html";
+        }
+
+        else{
+          document.getElementById("result").innerHTML = "<h1>failed</h1>";
+        }
+
+      }
+
+    </script>
+
      <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>teachersignin</title>
@@ -26,7 +57,7 @@
         <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
           <div class="card-body p-4 p-md-5">
             <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">teacher signin</h3>
-            <form id="studentsignin">
+            <form id="teachersigninform" onsubmit="return false">
 
 
 
@@ -53,7 +84,7 @@
                 <div class="col-md-6 mb-4">
 
                   <div class="form-outline">
-                    <input type="text" id="firstName" class="form-control form-control-lg" />
+                    <input type="text" name="teachername" class="form-control form-control-lg" />
                     <label class="form-label" for="firstName">Teacher Name</label>
                   </div>
 
@@ -61,7 +92,7 @@
                 <div class="col-md-6 mb-4">
 
                   <div class="form-outline">
-                    <input type="text" id="lastName" class="form-control form-control-lg" />
+                    <input type="text" name="teacherpassword" class="form-control form-control-lg" />
                     <label class="form-label" for="lastName">Teacher password</label>
                   </div>
 
@@ -119,7 +150,7 @@
               </div>
  -->
               <div class="mt-4 pt-2">
-                <input class="btn btn-primary btn-lg" type="submit" value="Teachersignin" />
+                <input class="btn btn-primary btn-lg" type="submit" value="Teachersignin" onclick="teachersignin()" />
               </div>
 
             </form>
@@ -130,6 +161,7 @@
   </div>
 </section>
 
+        <div id="result"></div>
 
          <!-- Option 1: Bootstrap Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> 
