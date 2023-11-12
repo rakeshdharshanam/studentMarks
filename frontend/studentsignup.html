@@ -15,9 +15,11 @@
 
 
             var url = "http://www.localhost:8081/addstudent";
+            var loginurl = "http://www.localhost:8081/addstudentlogin";
           var formData = new FormData(document.getElementById("studentsignupform"));
           var id = formData.get("id");
           var name = formData.get("studentname");
+          var password = formData.get("studentpassword");
           var collegename = document.getElementById("selectcollegeid").value;
         
           console.log(id,name,collegename);
@@ -29,6 +31,13 @@
           var data = {"id" : id, "name": name, "college" : college.data};
         
           axios.post(url,data).then((res)=>{console.log(res)});
+
+
+          var student = await axios.get("http://www.localhost:8081/getstudent/"+id);
+
+          var logindata = {"id" : id, "username": name, "password": password, "student": student.data };
+
+          axios.post(loginurl,logindata).then((res)=>{console.log(res.data);});
 
           axios.get("http:www.localhost:8081/getstudents").then((res) => {console.log(res.data);});
 

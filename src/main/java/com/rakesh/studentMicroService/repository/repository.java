@@ -7,7 +7,7 @@ import com.rakesh.studentMicroService.entity.student;
 
 public interface repository extends JpaRepository<student, Long> {
 
-	@Query("select stu from student stu where stu.name = ?1")
-	public student getstudentname(String studentname);
+	@Query("select stu from student stu where stu.id = ?1")
+	public student getstudentname(Long studentid);
 	
 }

@@ -15,9 +15,11 @@
 
 
         var url = "http://www.localhost:8081/addteacher";
+        var loginurl = "http://www.localhost:8081/addteacherlogin";
           var formData = new FormData(document.getElementById("teachersignupform"));
           var id = formData.get("id");
           var name = formData.get("teachername");
+          var password = formData.get("teacherpassword");
           var subjectnames = $("#selectsubjectsid").val();
           
           var subjects = [];
@@ -36,10 +38,19 @@
           console.log(subjects);
         
           var data = {"id" : id, "name": name, "subjects": subjects};
-        
-          axios.post(url,data).then((res)=>{console.log(res)});
+          
+          axios.post(url,data).then((res)=>{console.log(res);});
 
-        axios.get("http:www.localhost:8081/getteachers").then((res)=>{console.log(res.data);});
+          var teacher = await axios.get("http://www.localhost:8081/getteacher/"+id);
+
+          var logindata = {"id" : id, "username": name, "password": password, "teacher": teacher.data };
+
+          console.log(logindata)
+
+          axios.post(loginurl,logindata).then((res)=>{console.log(res.data);});
+
+
+          axios.get("http:www.localhost:8081/getteachers").then((res)=>{console.log(res.data);});
 
 
         
@@ -101,7 +112,7 @@
                 <div class="col-md-6 mb-4">
 
                   <div class="form-outline">
-                    <input type="text" teacherpassword="teacherpassword" class="form-control form-control-lg" />
+                    <input type="text" name="teacherpassword" class="form-control form-control-lg" />
                     <label class="form-label" for="lastName">Teacher password</label>
                   </div>
 

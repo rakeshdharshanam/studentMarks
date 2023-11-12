@@ -1,8 +1,10 @@
 package com.rakesh.studentMicroService.entity;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 
+@Entity
 public class studentlogin {
 	@Id
 	private Long id;
@@ -10,6 +12,7 @@ public class studentlogin {
 	private String password;
 	@OneToOne
 	private student student;
+	
 	public Long getId() {
 		return id;
 	}
