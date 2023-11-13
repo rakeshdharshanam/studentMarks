@@ -27,6 +27,8 @@ import com.rakesh.studentMicroService.repository.*;
 import com.rakesh.studentMicroService.repository.repository;
 import com.rakesh.studentMicroService.service.services;
 
+import jakarta.servlet.http.HttpSession;
+
 @RestController
 @CrossOrigin(origins = "*")
 public class restcontroller {
@@ -58,9 +60,32 @@ public class restcontroller {
 	@Autowired
 	private marksrepo marksrepo;
 	
+	@RequestMapping("/getsessiondata")
+	public String getsessiondata(HttpSession session){
+//		if(session.getAttribute("username") == null) {
+//			session.setAttribute("username", "rakesh");
+//		}
+//		
+		return (String)session.getAttribute("username");
+		
+	}
+	
+	@RequestMapping(method = RequestMethod.POST,value = "/setsessiondata/{username}")
+	public void setsessiondata(HttpSession session, @PathVariable String username){
+		
+			session.setAttribute("username", username);
+			System.out.println(session.getAttribute("username"));
+		
+//		return (String)session.getAttribute("username");
+		
+	}
+	
 	@RequestMapping("/hello")
-	public String hello(){
-		return "hello from spring boot";
+	public Long hello(HttpSession session){
+		Long count = session.getAttribute("count")== null ? 0 :(Long) session.getAttribute("count");
+		session.setAttribute("count", count+1);
+		
+		return count;
 	}
 	
 	

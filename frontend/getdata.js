@@ -1,3 +1,35 @@
+async function getsessiondata(){
+        
+         var sessiondata = await axios.get("http:www.localhost:8081/getsessiondata");
+
+          console.log(sessiondata.data);
+          var tag = document.getElementById("username");
+          tag.innerHTML += "user :"+sessiondata.data;        
+          // var select = document.getElementById("subjectid");
+          // select.innerHTML += tag1;
+        
+        }
+
+
+async function setsessiondata(username){
+        
+        axios.post("http:www.localhost:8081/setsessiondata/"+username);
+
+        var sessiondata = await axios.get("http:www.localhost:8081/getsessiondata");
+
+          console.log(sessiondata.data);
+                  
+          // var select = document.getElementById("subjectid");
+          // select.innerHTML += tag1;
+        
+        }
+
+
+
+// ========================================================================================================
+
+
+
 async function getsubjects(){
         
           axios.get("http:www.localhost:8081/getsubjects").then((res) => {console.log(res.data);});

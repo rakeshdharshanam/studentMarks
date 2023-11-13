@@ -28,10 +28,14 @@
 
         if(student["password"] == password){
           document.getElementById("result").innerHTML = "<h1>success</h1>"; 
+
+          setsessiondata(name);
+
           window.location.href = "homepage.html";
         }
 
         else{
+          setsessiondata("error");
           document.getElementById("result").innerHTML = "<h1>failed</h1>";
         }
 
