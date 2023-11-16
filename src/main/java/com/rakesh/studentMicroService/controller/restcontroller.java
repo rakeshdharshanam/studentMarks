@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,12 +26,14 @@ import com.rakesh.studentMicroService.entity.teacherlogin;
 import com.rakesh.studentMicroService.repository.collegerepo;
 import com.rakesh.studentMicroService.repository.*;
 import com.rakesh.studentMicroService.repository.repository;
+import com.rakesh.studentMicroService.service.customuserdetails;
 import com.rakesh.studentMicroService.service.services;
 
-import jakarta.servlet.http.HttpSession;
+
+import model.postdata;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin
 public class restcontroller {
 	
 	@Autowired
@@ -60,33 +63,40 @@ public class restcontroller {
 	@Autowired
 	private marksrepo marksrepo;
 	
-	@RequestMapping("/getsessiondata")
-	public String getsessiondata(HttpSession session){
-//		if(session.getAttribute("username") == null) {
-//			session.setAttribute("username", "rakesh");
-//		}
+	@Autowired
+	private customuserdetails cutomuserdetails = new customuserdetails("rakesh");
+	
+//	@Autowired
+//	private HttpSession session;
+//	
+//	@RequestMapping(method = RequestMethod.GET,value ="/getsessiondata")
+//	public String getsessiondata(){
+//		String username = (String)session.getAttribute("username");
+//		System.out.println(username+" get");
 //		
-		return (String)session.getAttribute("username");
-		
-	}
-	
-	@RequestMapping(method = RequestMethod.POST,value = "/setsessiondata/{username}")
-	public void setsessiondata(HttpSession session, @PathVariable String username){
-		
-			session.setAttribute("username", username);
-			System.out.println(session.getAttribute("username"));
-		
 //		return (String)session.getAttribute("username");
-		
-	}
-	
+//		
+//	}
+//	
+//	@RequestMapping(method = RequestMethod.POST,value = "/setsessiondata")
+//	public String setsessiondata(@RequestBody postdata data){
+//			
+//			session.setAttribute("username", data.getData());
+//			System.out.println(session.getAttribute("username") + "set");
+//			System.out.println(data.getData());
+//		
+//		return (String)session.getAttribute("username"); 	
+//		
+//	}
+//	
 	@RequestMapping("/hello")
-	public Long hello(HttpSession session){
-		Long count = session.getAttribute("count")== null ? 0 :(Long) session.getAttribute("count");
-		session.setAttribute("count", count+1);
+	@PreAuthorize("hasRole('ROLE_USER')")
+	public String hello(){
+		return cutomuserdetails.getPassword();
 		
-		return count;
 	}
+//	
+	
 	
 	
 //	college
