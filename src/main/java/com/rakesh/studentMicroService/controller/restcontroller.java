@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -67,8 +68,7 @@ public class restcontroller {
 	@Autowired
 	private PasswordEncoder passwordencoder;
 	
-	@Autowired
-	private customuserdetails cutomuserdetails = new customuserdetails("rakesh");
+	
 	
 //	@Autowired
 //	private HttpSession session;
@@ -92,13 +92,13 @@ public class restcontroller {
 //		return (String)session.getAttribute("username"); 	
 //		
 //	}
-//	
-	@RequestMapping("/hello")
-	@PreAuthorize("hasRole('ROLE_USER')")
-	public String hello(){
-		return cutomuserdetails.getPassword();
-		
-	}
+//		@PreAuthorize("hasRole('ROLE_USER')")
+	
+//	@RequestMapping("/hello")
+//	public String hello(){
+//		return cutomuserdetails.getPassword();
+//		
+//	}
 //	
 	
 	

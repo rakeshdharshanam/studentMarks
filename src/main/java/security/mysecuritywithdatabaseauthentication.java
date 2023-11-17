@@ -1,8 +1,12 @@
 package security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -22,7 +26,10 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class mysecurity {
+public class mysecuritywithdatabaseauthentication {
+	
+	@Autowired
+	UserDetailsService customDetailsService;
 
 	 
 	@Bean
@@ -30,27 +37,37 @@ public class mysecurity {
 		return new BCryptPasswordEncoder();
 	}
 	
-	@Bean
-	public UserDetailsService userDetailsService() {
-		UserDetails user = User.builder()
-				.username("user")
-				.password(PasswordEncoder().encode("password"))
-				.roles("USER")
-				.build();
-		UserDetails admin = User.builder()
-				.username("rakesh")
-				.password(PasswordEncoder().encode("rakesh"))
-				.roles("ADMIN", "USER")
-				.build();
-		return new InMemoryUserDetailsManager(user, admin);
-	}
+//	@Bean
+//	public UserDetailsService userDetailsService() {
+//		UserDetails user = User.builder()
+//				.username("user")
+//				.password(PasswordEncoder().encode("password"))
+//				.roles("USER")
+//				.build();
+//		UserDetails admin = User.builder()
+//				.username("rakesh")
+//				.password(PasswordEncoder().encode("rakesh"))
+//				.roles("ADMIN", "USER")
+//				.build();
+//		return new InMemoryUserDetailsManager(user, admin);
+//	}
 
+	@Bean
+	public AuthenticationManager authenticationManager() {
+		
+		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+		authenticationProvider.setUserDetailsService(customDetailsService);
+		authenticationProvider.setPasswordEncoder(PasswordEncoder());
+
+	return new ProviderManager(authenticationProvider);
+}
+	
 	
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
 			.csrf().disable()
-			.authorizeHttpRequests().requestMatchers("/hello").permitAll().and()
+//			.authorizeHttpRequests().requestMatchers("/hello").permitAll().and()
 			.authorizeHttpRequests((authorize)-> authorize.anyRequest().authenticated())
 //			.formLogin();
 			.httpBasic(Customizer.withDefaults());

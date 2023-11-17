@@ -2,6 +2,9 @@ package com.rakesh.studentMicroService.service;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
+
+import com.rakesh.studentMicroService.entity.studentlogin;
 import com.rakesh.studentMicroService.repository.studentloginrepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,13 +15,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class customuserdetails implements UserDetails{
 	
-	@Autowired
-	private studentloginrepo studentloginrepo;
-
 	private String username;
+	private String password;
+	private List<GrantedAuthority> authorities;
 	
-	public customuserdetails(String username) {
-		this.username = username;
+	public customuserdetails(studentlogin user) {
+		this.username = user.getUsername();
+		this.password = user.getPassword();
+		this.authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
 	}
 	
 	public customuserdetails() {
@@ -28,21 +32,21 @@ public class customuserdetails implements UserDetails{
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
-		return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
+		return authorities;
 	}
 
 	@Override
 	public String getPassword() {
 		// TODO Auto-generated method stub
 //		return studentloginrepo.getpassword(this.username);
-		return studentloginrepo.getpassword("rakesh");
+		return password;
 //		return "1234";
 	}
 
 	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
-		return this.username;
+		return username;
 	}
 
 	@Override
