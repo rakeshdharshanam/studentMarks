@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -62,6 +63,9 @@ public class restcontroller {
 	
 	@Autowired
 	private marksrepo marksrepo;
+	
+	@Autowired
+	private PasswordEncoder passwordencoder;
 	
 	@Autowired
 	private customuserdetails cutomuserdetails = new customuserdetails("rakesh");
@@ -185,6 +189,9 @@ public class restcontroller {
 	
 	@RequestMapping(method = RequestMethod.POST,value = "/addstudentlogin")
 	public ArrayList<studentlogin> addstudentlogin(@RequestBody studentlogin studentlogin){
+		String password = studentlogin.getPassword();
+		String encryptedpassword = passwordencoder.encode(password);
+		studentlogin.setPassword(encryptedpassword);
 		studentloginrepo.save(studentlogin);
 		return (ArrayList<studentlogin>)studentloginrepo.findAll();
 	}

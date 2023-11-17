@@ -1,6 +1,7 @@
 package com.rakesh.studentMicroService;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -17,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+
 
 @Configuration
 @EnableWebSecurity
@@ -50,8 +52,9 @@ public class mysecurity {
 		http
 			.csrf().disable()
 			.authorizeHttpRequests().requestMatchers("/hello").permitAll().and()
-			.authorizeHttpRequests((authorize)-> authorize.anyRequest().authenticated()).formLogin();
-//			.httpBasic(Customizer.withDefaults());
+			.authorizeHttpRequests((authorize)-> authorize.anyRequest().authenticated())
+//			.formLogin();
+			.httpBasic(Customizer.withDefaults());
 		return http.build();
 	}
 	 
